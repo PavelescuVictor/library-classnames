@@ -7,7 +7,13 @@ export default defineConfig({
             entry: resolve(__dirname, 'src/index.ts'),
             name: 'library-classnames',
             fileName: (format) => `library-classnames.${format}.js`,
-            formats: ['es', 'umd', 'cjs'],
+            formats: ['es', 'umd'],
         },
+        rollupOptions: {
+            input: 'src/index.ts',
+        }
     },
+    server: {
+        open: true,
+    }
 });
