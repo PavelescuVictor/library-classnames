@@ -2,8 +2,11 @@
   "name": "@victorpavn/library-classnames",
   "version": "0.0.0",
   "description": "A small library for constructing component classnames.",
+  "keywords": [
+    "classname"
+  ],
   "main": "dist/index.ts",
-  "types": "dist/index.d.ts",  
+  "types": "dist/index.d.ts",
   "files": [
     "/dist"
   ],
@@ -28,5 +31,8 @@
   "homepage": "https://github.com/PavelescuVictor/library-classnames#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@types/node": "^22.7.4"
   }
 }
