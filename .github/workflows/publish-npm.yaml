@@ -1,34 +1,92 @@
-name: Release to NPM
+name: Release package to NPM and GPR 🚀
 on:
     release:
         types: [published]
 jobs:
     build:
-        runs-on: ubuntu-latest
         permissions:
             contents: read
             id-token: write
+            packages: write
+            attestations: write
+        runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v4
         
-            - name: Install pnpm LTS
+            - name: Install pnpm LTS 
               uses: pnpm/action-setup@v4
               with:
                 version: "latest"
+                # Prevent automatic instalation of resources at the current point
                 run_install: false
 
             - name: Install Node LTS
               uses: actions/setup-node@v4
               with:
-                node-version: "lts/*"
+                node-version: "latest"
+                cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            # TODO: Adding tests at a later stage
+            # - name: Running tests
+            #   run: pnpm test
+    publish-npm:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install pnpm LTS 
+              uses: pnpm/action-setup@v4
+              with:
+                version: "latest"
+                # Prevent automatic instalation of resources at the current point
+                run_install: false
+
+            - name: Install Node LTS
+              uses: actions/setup-node@v4
+              with:
+                node-version: "latest"
                 registry-url: "https://registry.npmjs.org"
                 cache: pnpm
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Publish to NPM
-              run: npm publish --provenance
+            - name: Publish to NPM 🚀
+              run: pnpm publish dist --no-git-checks
               env: 
-                NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
+    publish-gpr:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install pnpm LTS 
+              uses: pnpm/action-setup@v4
+              with:
+                version: "latest"
+                # Prevent automatic instalation of resources at the current point
+                run_install: false
+
+            - name: Install Node LTS
+              uses: actions/setup-node@v4
+              with:
+                node-version: "latest"
+                registry-url: "https://npm.pkg.github.com"
+                cache: pnpm
+                scope: '@victorpavn'
+            
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Publish to GPR
+              run: pnpm publish dist --no-git-checks
+              env: 
+                NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GPR_TOKEN }}
