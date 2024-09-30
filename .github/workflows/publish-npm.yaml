@@ -58,7 +58,7 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Publish to NPM 🚀
-              run: pnpm publish dist --no-git-checks
+              run: pnpm publish --no-git-checks
               env: 
                 NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
     publish-gpr:
@@ -87,6 +87,6 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Publish to GPR
-              run: pnpm publish dist --no-git-checks
+              run: pnpm publish --no-git-checks
               env: 
                 NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GPR_TOKEN }}
