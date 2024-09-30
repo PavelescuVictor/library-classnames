@@ -1,24 +1,27 @@
-name: Publish Package to npmjs
+name: Release to NPM
 on:
     release:
         types: [published]
 jobs:
     build:
         runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            id-token: write
         steps:
-            - uses: actions/checkout@v4
-            # Setup .npmrc file to publish to npm
-            - uses: actions/setup-node@v4
-              with:
-                    node-version: "20.x"
-                    registry-url: "https://registry.npmjs.org"
+            - name: Checkout
+              uses: actions/checkout@v4
+        
             - uses: pnpm/action-setup@v4
+
+            - name: Use Node LTS
+              uses: actions/setup-node@v4
               with:
-                    version: 9
-            - run: pnpm install
-            - run: pnpm publish --provenance
-              env:
-                    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                node-version: "lts/*"
+                registry-url: "https://registry.npmjs.org"
+                cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Publish to NPM
+              run: npm --provenance
+              env: 
+                NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
