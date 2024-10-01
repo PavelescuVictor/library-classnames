@@ -58,7 +58,7 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Publish to NPM 🚀
-              run: pnpm publish dist --no-git-checks
+              run: pnpm publish --no-git-checks --access public
               env: 
                 NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
     publish-gpr:
@@ -79,14 +79,20 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: "latest"
-                registry-url: "https://npm.pkg.github.com"
                 cache: pnpm
-                scope: '@victorpavn'
+                registry-url: "https://npm.pkg.github.com"
+                scope: '@PavelescuVictor'
             
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
+            - name: Add registry to npmrc
+              run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.PUBLISH_GITHUB_TOKEN }}" >> ~/.npmrc
+
+            # Verify npm configuration (for debugging)
+            - run: npm config list
+
             - name: Publish to GPR
-              run: pnpm publish dist --no-git-checks
+              run: pnpm publish --no-git-checks
               env: 
-                NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GPR_TOKEN }}
+                NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
