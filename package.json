@@ -1,5 +1,5 @@
 {
-  "name": "@victorpavn/library-classnames",
+  "name": "library-classnames",
   "version": "0.0.2",
   "description": "A small library for constructing component classnames.",
   "keywords": [
