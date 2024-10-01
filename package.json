@@ -1,6 +1,6 @@
 {
-  "name": "@victorpavn/library-classnames",
-  "version": "0.0.2",
+  "name": "library-classnames",
+  "version": "0.0.1",
   "description": "A small library for constructing component classnames.",
   "keywords": [
     "classname"
@@ -34,6 +34,7 @@
     "whoami": "^0.0.3"
   },
   "publishConfig": {
-    "@pavelescuvictor:registry": "https://npm.pkg.github.com"
+    "@pavelescuvictor:registry": "https://npm.pkg.github.com",
+    "@victorpavn:registry": "https://registry.npmjs.org"
   }
 }

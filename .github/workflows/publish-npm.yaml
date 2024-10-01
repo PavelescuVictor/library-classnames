@@ -92,7 +92,7 @@ jobs:
                 node-version: "latest"
                 cache: pnpm
                 registry-url: "https://npm.pkg.github.com"
-                scope: "@pavelescuvictor"
+                scope: "@PavelescuVictor"
             
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
