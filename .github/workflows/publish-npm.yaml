@@ -53,13 +53,14 @@ jobs:
                 node-version: "latest"
                 cache: pnpm
                 registry-url: "https://registry.npmjs.org"
+                scope: "@victorpavn"
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
             # Verify npm configuration (for debugging)
-            - name: Debug npm configuration
-              run: pnpm config list
+            # - name: Debug npm configuration
+            #   run: pnpm config list
 
             - name: Publish to NPM 🚀
               run: pnpm publish --no-git-checks --access public
@@ -85,19 +86,21 @@ jobs:
                 node-version: "latest"
                 cache: pnpm
                 registry-url: "https://npm.pkg.github.com"
-                scope: "@PavelescuVictor"
+                scope: "@pavelescuvictor"
             
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Create npmrc for GPR registry
-              run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.PUBLISH_GITHUB_TOKEN }}" > ~/.npmrc
+            # - name: Create npmrc for GPR registry
+            #   run: |
+            #     echo "//npm.pkg.github.com/:_authToken=${{ secrets.PUBLISH_GITHUB_TOKEN }}" >> .npmrc
+            #     npm whaomi
 
             # Verify npm configuration (for debugging)
-            - name: Debug npm configuration
-              run: pnpm config list
+            # - name: Debug npm configuration
+            #   run: pnpm config list
 
             - name: Publish to GPR
-              run: pnpm publish --no-git-checks
+              run: pnpm publish --no-git-checks --acess public
               env: 
                 NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
