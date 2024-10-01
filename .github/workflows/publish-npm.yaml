@@ -69,7 +69,7 @@ jobs:
                 NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
 
             - name: Publish to NPM 🚀
-              run: pnpm publish --no-git-checks --access public
+              run: pnpm publish --no-git-checks --access public --dry-run
               env: 
                 NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
     publish-gpr:
@@ -113,6 +113,6 @@ jobs:
                 NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
 
             - name: Publish to GPR
-              run: pnpm publish --no-git-checks --access public
+              run: pnpm publish --no-git-checks --access public --dry-run
               env: 
                 NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
