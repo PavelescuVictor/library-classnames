@@ -52,7 +52,7 @@ jobs:
               with:
                 node-version: "latest"
                 registry-url: "https://registry.npmjs.org"
-                # cache: pnpm
+                cache: pnpm
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
@@ -79,12 +79,15 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: "latest"
-                # cache: pnpm
+                cache: pnpm
                 registry-url: "https://npm.pkg.github.com"
                 scope: '@PavelescuVictor'
             
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
+
+            - name: Add registry to npmrc
+              run: echo registry=https://npm.pkg.github.com/PavelescuVictor >> .npmrc
 
             - name: Publish to GPR
               run: pnpm publish --no-git-checks
