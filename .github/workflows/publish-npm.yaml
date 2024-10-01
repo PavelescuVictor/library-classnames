@@ -87,7 +87,7 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Add registry to npmrc
-              run: echo registry=https://npm.pkg.github.com/PavelescuVictor >> .npmrc
+              run: echo @PavelescuVictor:registry=https://npm.pkg.github.com/PavelescuVictor/ >> .npmrc
 
             - name: Publish to GPR
               run: pnpm publish --no-git-checks
