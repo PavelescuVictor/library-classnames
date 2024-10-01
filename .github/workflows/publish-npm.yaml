@@ -53,6 +53,7 @@ jobs:
                 node-version: "latest"
                 registry-url: "https://registry.npmjs.org"
                 cache: pnpm
+                scope: "@victorpavn"
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
@@ -79,15 +80,12 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: "latest"
-                cache: pnpm
                 registry-url: "https://npm.pkg.github.com"
-                scope: '@PavelescuVictor'
+                cache: pnpm
+                scope: "@PavelescuVictor"
             
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
-
-            - name: Add registry to npmrc
-              run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.PUBLISH_GITHUB_TOKEN }}" >> ~/.npmrc
 
             # Verify npm configuration (for debugging)
             - run: npm config list
