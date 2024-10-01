@@ -30,7 +30,8 @@
   },
   "homepage": "https://github.com/PavelescuVictor/library-classnames#readme",
   "dependencies": {
-    "@types/node": "^22.7.4"
+    "@types/node": "^22.7.4",
+    "whoami": "^0.0.3"
   },
   "publishConfig": {
     "@pavelescuvictor:registry": "https://npm.pkg.github.com"

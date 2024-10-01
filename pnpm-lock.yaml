@@ -8,6 +8,9 @@ dependencies:
   '@types/node':
     specifier: ^22.7.4
     version: 22.7.4
+  whoami:
+    specifier: ^0.0.3
+    version: 0.0.3
 
 devDependencies:
   typescript:
@@ -447,6 +450,12 @@ packages:
       fsevents: 2.3.3
     dev: true
 
+  /shelljs@0.3.0:
+    resolution: {integrity: sha512-Ny0KN4dyT8ZSCE0frtcbAJGoM/HTArpyPkeli1/00aYfm0sbD/Gk/4x7N2DP9QKGpBsiQH7n6rpm1L79RtviEQ==}
+    engines: {node: '>=0.8.0'}
+    hasBin: true
+    dev: false
+
   /source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -499,3 +508,10 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
+
+  /whoami@0.0.3:
+    resolution: {integrity: sha512-ZXwrGI7u/TYWv53uSAbSpqGviNAy4SNiew6Z/VEDGtrEOh67vyCX80/4oS3hN+Pscu2mY4n+M4ygc3pt8qce3g==}
+    engines: {node: '>= 0.10.0'}
+    dependencies:
+      shelljs: 0.3.0
+    dev: false
