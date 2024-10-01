@@ -58,7 +58,7 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Publish to NPM 🚀
-              run: pnpm publish --no-git-checks
+              run: pnpm publish --no-git-checks --access public
               env: 
                 NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
     publish-gpr:
@@ -87,7 +87,7 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Add registry to npmrc
-              run: echo registry=https://npm.pkg.github.com/PavelescuVictor >> .npmrc
+              run: echo "//npm.pkg.github.com/:authToken=${{ secrets.PUBLISH_GITHUB_TOKEN }}" >> .npmrc
 
             - name: Publish to GPR
               run: pnpm publish --no-git-checks
