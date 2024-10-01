@@ -33,6 +33,6 @@
     "@types/node": "^22.7.4"
   },
   "publishConfig": {
-    "@PavelescuVictor:registry": "https://npm.pkg.github.com"
+    "@pavelescuvictor:registry": "https://npm.pkg.github.com"
   }
 }
