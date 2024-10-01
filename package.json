@@ -1,5 +1,5 @@
 {
-  "name": "library-classnames",
+  "name": "@victorpavn/library-classnames",
   "version": "0.0.2",
   "description": "A small library for constructing component classnames.",
   "keywords": [
@@ -31,5 +31,8 @@
   "homepage": "https://github.com/PavelescuVictor/library-classnames#readme",
   "dependencies": {
     "@types/node": "^22.7.4"
+  },
+  "publishConfig": {
+    "@PavelescuVictor:registry": "https://npm.pkg.github.com"
   }
 }

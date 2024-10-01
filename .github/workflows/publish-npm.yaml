@@ -51,12 +51,15 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: "latest"
-                registry-url: "https://registry.npmjs.org"
                 cache: pnpm
-                scope: "@victorpavn"
+                registry-url: "https://registry.npmjs.org"
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
+
+            # Verify npm configuration (for debugging)
+            - name: Debug npm configuration
+              run: pnpm config list
 
             - name: Publish to NPM 🚀
               run: pnpm publish --no-git-checks --access public
@@ -80,15 +83,19 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: "latest"
-                registry-url: "https://npm.pkg.github.com"
                 cache: pnpm
+                registry-url: "https://npm.pkg.github.com"
                 scope: "@PavelescuVictor"
             
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
+            - name: Create npmrc for GPR registry
+              run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.PUBLISH_GITHUB_TOKEN }}" > ~/.npmrc
+
             # Verify npm configuration (for debugging)
-            - run: npm config list
+            - name: Debug npm configuration
+              run: pnpm config list
 
             - name: Publish to GPR
               run: pnpm publish --no-git-checks
