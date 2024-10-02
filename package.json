@@ -21,9 +21,8 @@
     "ci": "pnpm run lint && pnpm run test && pnpm run build"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.8",
-    "@types/node": "^22.7.4",
     "typescript": "^5.5.3",
+    "@types/node": "^22.7.4",
     "vite": "^5.4.1",
     "vitest": "^2.1.1",
     "whoami": "^0.0.3"
