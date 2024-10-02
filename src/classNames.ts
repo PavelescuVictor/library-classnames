@@ -1,37 +1,37 @@
 import { 
-    IClassNamesProp,
+    IClassNamesArg,
     IUseClassNamesArgs,
     IClassNamesObject
 } from './classNames.types';
 
 /**
  * Checks if string is a valid string
- * @param {IClassNamesProp} string 
+ * @param {IClassNamesArg} string 
  * @returns {boolean}
  */
-const isValidString = (string: IClassNamesProp) : boolean =>  typeof string === 'string' && string !== "";
+const isValidString = (string: IClassNamesArg): boolean =>  typeof string === 'string' && string !== "";
 
 /**
  * Checks if array is a valid array
- * @param {IClassNamesProp} array 
+ * @param {IClassNamesArg} array 
  * @returns {boolean}
  */
-const isValidArray = (array: IClassNamesProp) : boolean => Array.isArray(array) && !!array.length;
+const isValidArray = (array: IClassNamesArg): boolean => Array.isArray(array) && !!array.length;
 
 /**
  * Checks if object is a valid object
- * @param {IClassNamesProp} object 
+ * @param {IClassNamesArg} object 
  * @returns {boolean}
  */
-const isValidObject = (object: IClassNamesProp) : boolean => typeof object === 'object' && !!Object.keys(object).length;
+const isValidObject = (object: IClassNamesArg): boolean => typeof object === 'object' && !!Object.keys(object).length;
 
 /**
  * Check if classNames is a valid format
- * @param {IClassNamesProp} classNames 
+ * @param {IClassNamesArg} arg
  * @returns {boolean} 
  */
-const isValidData = (classNames: IClassNamesProp) : boolean => {
-    if ( !classNames || !isValidString(classNames) || !isValidArray(classNames) || !isValidObject(classNames)) {
+const isValidArg = (arg: IClassNamesArg): boolean => {
+    if ( !arg || !isValidString(arg) || !isValidArray(arg) || !isValidObject(arg)) {
         return false;
     }
     return true;
@@ -40,33 +40,33 @@ const isValidData = (classNames: IClassNamesProp) : boolean => {
 /**
  * Adds string to the classNames set. If separation by " " found, adds each separated part individually.
  * @param {Set<string>} classNames 
- * @param {string} specificClassNames 
+ * @param {string} payload 
  * @returns {void}
  */
-const addString = (classNames: Set<string>, specificClassNames: string) : void => {
-    if (!specificClassNames) {
+const addString = (classNames: Set<string>, payload: string): void => {
+    if (!payload) {
         return;
     }
-    if (specificClassNames.includes(" ")) {
-        addArray(classNames, specificClassNames.split(" "));
+    if (payload.includes(" ")) {
+        addArray(classNames, payload.split(" "));
     }
-    if (classNames.has(specificClassNames)) {
+    if (classNames.has(payload)) {
         return;
     }
-    classNames.add(specificClassNames);
+    classNames.add(payload);
 }
 
 /**
  * Adds array to the classNames set. Trimming and filtering empty elements
  * @param {Set<string>} classNames 
- * @param {Array<IClassNamesProp>} specificClassNames 
+ * @param {Array<IClassNamesArg>} payload 
  */
-const addArray = (classNames: Set<string>, specificClassNames: Array<IClassNamesProp>) : void => {
-    if (!specificClassNames || !specificClassNames.length) {
+const addArray = (classNames: Set<string>, payload: Array<IClassNamesArg>): void => {
+    if (!payload || !payload.length) {
         return;
     }
 
-    (specificClassNames
+    (payload
     .filter(className => isValidString(className)) as Array<string>)
     .map(className => className.trim())
     .forEach(className => {
@@ -77,15 +77,15 @@ const addArray = (classNames: Set<string>, specificClassNames: Array<IClassNames
 /**
  * Adds each key of object to the classNames set if value for key is truthy.
  * @param {Set<string>} classNames 
- * @param {IClassNamesObject} specificClassNames 
+ * @param {IClassNamesObject} payload 
  */
-const addObject = (classNames: Set<string>, specificClassNames: IClassNamesObject) : void => {
-    if (!isValidObject(specificClassNames)) {
+const addObject = (classNames: Set<string>, payload: IClassNamesObject): void => {
+    if (!isValidObject(payload)) {
         return;
     }
 
-    Object.keys(specificClassNames).forEach(className => {
-        if (!!specificClassNames[className]) {
+    Object.keys(payload).forEach(className => {
+        if (!!payload[className]) {
             addString(classNames, className);
             return;
         }
@@ -98,7 +98,7 @@ const addObject = (classNames: Set<string>, specificClassNames: IClassNamesObjec
  * @param {IUseClassNamesArgs} args 
  * @returns {boolean}
  */
-const validArgs = (args: IUseClassNamesArgs) : boolean => {
+const validArgs = (args: IUseClassNamesArgs): boolean => {
     if (!args.length) {
         return false;
     }
@@ -110,28 +110,28 @@ const validArgs = (args: IUseClassNamesArgs) : boolean => {
  * @param {IUseClassNamesArgs} args 
  * @returns {IUseClassNamesArgs} santizied list of args after removing the ones that are not valid
  */
-const sanitizeArgs = (args: IUseClassNamesArgs) : IUseClassNamesArgs =>  {
-    return args.filter((specificClassNames: IClassNamesProp) => isValidData(specificClassNames))
-}
+const sanitizeArgs = (args: IUseClassNamesArgs): IUseClassNamesArgs => args.filter((arg: IClassNamesArg) => isValidArg(arg));
 
 /**
  * Construct the string of classNames
  * @param {IUseClassNamesArgs} args 
  * @returns {string}
  */
-const classNames = (...args: IUseClassNamesArgs) : string => {
+const classNames = (...args: IUseClassNamesArgs): string => {
     const classNames = new Set<string>();
-    args.forEach((specificClassNames: IClassNamesProp) => {
-        if (isValidString(specificClassNames)) {
-            addString(classNames, specificClassNames as string);
+    args.forEach((arg: IClassNamesArg) => {
+        if (isValidString(arg)) {
+            addString(classNames, arg as string);
             return;
         }
-        if (isValidArray(specificClassNames)) {
-            addArray(classNames, specificClassNames as Array<IClassNamesProp>);
+
+        if (isValidArray(arg)) {
+            addArray(classNames, arg as Array<IClassNamesArg>);
             return;
         }
-        if (isValidObject(specificClassNames)) {
-            addObject(classNames, specificClassNames as IClassNamesObject);
+
+        if (isValidObject(arg)) {
+            addObject(classNames, arg as IClassNamesObject);
         }
     });
     return [...classNames.values()].join(" ") as string;
@@ -141,7 +141,7 @@ const classNames = (...args: IUseClassNamesArgs) : string => {
  * Cached version of the classNames function
  * @returns {Function}
  */
-const memoizedClassNames = (func: typeof classNames) : Function => {
+const memoizedClassNames = (func: typeof classNames): Function => {
     const _cache = new Map<string, string>();
     
     /**
