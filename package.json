@@ -22,8 +22,10 @@
   },
   "devDependencies": {
     "typescript": "^5.5.3",
+    "@types/node": "^22.7.4",
     "vite": "^5.4.1",
-    "vitest": "^2.1.1"
+    "vitest": "^2.1.1",
+    "whoami": "^0.0.3"
   },
   "repository": {
     "type": "git",
@@ -35,10 +37,6 @@
     "url": "https://github.com/PavelescuVictor/library-classnames/issues"
   },
   "homepage": "https://github.com/PavelescuVictor/library-classnames#readme",
-  "dependencies": {
-    "@types/node": "^22.7.4",
-    "whoami": "^0.0.3"
-  },
   "publishConfig": {
     "@PavelescuVictor:registry": "https://npm.pkg.github.com"
   }
