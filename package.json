@@ -14,10 +14,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "lint": "tsc",
     "test:dev": "vitest",
     "test": "vitest run",
     "preview": "vite preview",
-    "ci": "pnpm run test && pnpm run build"
+    "ci": "pnpm run lint && pnpm run test && pnpm run build"
   },
   "devDependencies": {
     "typescript": "^5.5.3",
