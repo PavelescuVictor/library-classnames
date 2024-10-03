@@ -8,6 +8,9 @@ devDependencies:
   '@types/node':
     specifier: ^22.7.4
     version: 22.7.4
+  husky:
+    specifier: ^9.1.6
+    version: 9.1.6
   typescript:
     specifier: ^5.5.3
     version: 5.6.2
@@ -524,6 +527,12 @@ packages:
 
   /get-func-name@2.0.2:
     resolution: {integrity: sha512-8vXOvuE167CtIc3OyItco7N/dpRtBbYOsPsXCz7X/PMnlGjYjSGuZJgM1Y7mmew7BKf9BqvLX2tnOVy1BBUsxQ==}
+    dev: true
+
+  /husky@9.1.6:
+    resolution: {integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A==}
+    engines: {node: '>=18'}
+    hasBin: true
     dev: true
 
   /loupe@3.1.1:
