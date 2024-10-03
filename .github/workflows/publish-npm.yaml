@@ -29,10 +29,6 @@ jobs:
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
-
-            # TODO: Adding tests at a later stage
-            # - name: Running tests
-            #   run: pnpm test
     publish-npm:
         needs: build
         runs-on: ubuntu-latest
