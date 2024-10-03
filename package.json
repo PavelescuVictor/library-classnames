@@ -36,7 +36,7 @@
     "url": "git+https://github.com/PavelescuVictor/library-classnames.git"
   },
   "author": "Victor Pavelescu",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/PavelescuVictor/library-classnames/issues"
   },
