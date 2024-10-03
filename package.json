@@ -22,8 +22,7 @@
     "test": "vitest",
     "preview": "vite preview",
     "pre-commit": "pnpm run lint && pnpm run test",
-    "ci": "pnpm run lint && pnpm run test && pnpm run build",
-    "release": "pnpn run lint && pnm run test && pnpm run build && changeset publish"
+    "ci": "pnpm run lint && pnpm run test && pnpm run build"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
