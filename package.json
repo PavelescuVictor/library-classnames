@@ -18,6 +18,7 @@
     "build": "tsc && vite build",
     "lint": "tsc",
     "test:dev": "vitest",
+    "test:dev:debug": "vitest --silent=false",
     "test": "vitest run",
     "preview": "vite preview",
     "ci": "pnpm run lint && pnpm run test && pnpm run build"
