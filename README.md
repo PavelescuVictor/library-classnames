@@ -1,4 +1,4 @@
-***<p style="text-align:center;">library-classnames</p>***
+***<h1 style="text-align:center;">library-classnames</h1>***
 ## Description
 
 Small library for creating class names based on values passed.
