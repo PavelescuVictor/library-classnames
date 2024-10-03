@@ -4,6 +4,8 @@ import {
     IClassNamesObject
 } from './classNames.types';
 
+const SPACE_CHARACTER = " "
+
 /**
  * Checks if string is a valid string
  * @param {IClassNamesArg} string 
@@ -23,7 +25,7 @@ const isValidArray = (array: IClassNamesArg): boolean => Array.isArray(array) &&
  * @param {IClassNamesArg} object 
  * @returns {boolean}
  */
-const isValidObject = (object: IClassNamesArg): boolean => typeof object === 'object' && !!Object.keys(object).length;
+const isValidObject = (object: IClassNamesArg): boolean =>  typeof object === 'object' && object && !!Object.keys(object).length;
 
 /**
  * Check if classNames is a valid format
@@ -31,29 +33,34 @@ const isValidObject = (object: IClassNamesArg): boolean => typeof object === 'ob
  * @returns {boolean} 
  */
 const isValidArg = (arg: IClassNamesArg): boolean => {
-    if ( !arg || !isValidString(arg) || !isValidArray(arg) || !isValidObject(arg)) {
+    if (!arg) {
+        return false;
+    }
+    if (!isValidString(arg) && !isValidArray(arg) && !isValidObject(arg)) {
         return false;
     }
     return true;
 }
 
 /**
- * Adds string to the classNames set. If separation by " " found, adds each separated part individually.
+ * Adds string to the classNames set. If separation by @constant SPACE_CHARACTER found, adds each separated part individually.
  * @param {Set<string>} classNames 
  * @param {string} payload 
  * @returns {void}
  */
 const addString = (classNames: Set<string>, payload: string): void => {
-    if (!payload) {
+    if (!payload || typeof payload !== 'string' || !payload.replace(SPACE_CHARACTER, "").length) {
         return;
     }
-    if (payload.includes(" ")) {
-        addArray(classNames, payload.split(" "));
-    }
-    if (classNames.has(payload)) {
+    const trimmedPayload = payload.trim();
+    if (trimmedPayload.includes(SPACE_CHARACTER)) {
+        addArray(classNames, trimmedPayload.split(SPACE_CHARACTER));
         return;
     }
-    classNames.add(payload);
+    if (classNames.has(trimmedPayload)) {
+        return;
+    }
+    classNames.add(trimmedPayload);
 }
 
 /**
@@ -66,11 +73,20 @@ const addArray = (classNames: Set<string>, payload: Array<IClassNamesArg>): void
         return;
     }
 
-    (payload
-    .filter(className => isValidString(className)) as Array<string>)
-    .map(className => className.trim())
-    .forEach(className => {
-        addString(classNames, className);
+    payload
+    .forEach(item => {
+        if (isValidString(item)) {
+            addString(classNames, item as string);
+            return;
+        }
+        if (isValidArray(item)) {
+            addArray(classNames, item as Array<IClassNamesArg>);
+            return;
+        }
+        if (isValidObject(item)) {
+            addObject(classNames, item as IClassNamesObject);
+            return;
+        }
     })
 }
 
@@ -85,7 +101,7 @@ const addObject = (classNames: Set<string>, payload: IClassNamesObject): void =>
     }
 
     Object.keys(payload).forEach(className => {
-        if (!!payload[className]) {
+        if (payload[className] === 1 || payload[className] === true) {
             addString(classNames, className);
             return;
         }
@@ -134,7 +150,7 @@ const classNames = (...args: IUseClassNamesArgs): string => {
             addObject(classNames, arg as IClassNamesObject);
         }
     });
-    return [...classNames.values()].join(" ") as string;
+    return [...classNames.values()].join(SPACE_CHARACTER) as string;
 }
 
 /**
@@ -143,10 +159,9 @@ const classNames = (...args: IUseClassNamesArgs): string => {
  */
 const memoizedClassNames = (func: typeof classNames): Function => {
     const _cache = new Map<string, string>();
-    
     /**
      * @param {Array<IUseClassNamesArgs>} args - Arrays of arguments passed to the classNames function
-     * @returns {string} the classnames as a formatted string joined by " "
+     * @returns {string} the classnames as a formatted string joined by @constant SPACE_CHARACTER
      */
     return (...args: IUseClassNamesArgs) : string => {
         if (!validArgs(args)) {
@@ -154,16 +169,16 @@ const memoizedClassNames = (func: typeof classNames): Function => {
         }
 
         const newArgs = sanitizeArgs(args);
-        if (!validArgs(args)) {
+        if (!validArgs(newArgs)) {
             return "";
         }
-
+        
         const key = JSON.stringify(args);
         if (_cache.has(key)) {
             return _cache.get(key) || "";
         }
 
-        const results = func.apply(this, newArgs)
+        const results = func.apply(this, newArgs);
         _cache.set(key, results);
         return results;
     }
