@@ -17,5 +17,7 @@ export default defineConfig({
     server: {
         open: true,
     },
-    test: {}
+    test: {
+        setupFiles: './src/classNames.test.ts'
+    }
 });
