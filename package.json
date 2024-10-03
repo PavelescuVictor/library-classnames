@@ -21,6 +21,7 @@
     "test:dev:debug": "vitest --silent=false",
     "test": "vitest run",
     "preview": "vite preview",
+    "precommit": "pnpm run lint && pnpm run test",
     "ci": "pnpm run lint && pnpm run test && pnpm run build"
   },
   "devDependencies": {
