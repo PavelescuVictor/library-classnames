@@ -19,7 +19,7 @@
     "lint": "tsc",
     "test:dev": "vitest",
     "test:dev:debug": "vitest --silent=false",
-    "test": "vitest",
+    "test": "vitest -- --verbose",
     "preview": "vite preview",
     "pre-commit": "pnpm run lint && pnpm run test",
     "ci": "pnpm run lint && pnpm run test && pnpm run build"
